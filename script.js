@@ -1,8 +1,11 @@
 function myFunction() {
     var sheet_id = '1VZZedsz_vya4C3fEOBxQ_3S1ga6WLiSuvempq5Ow7EU'
-    var course_code = "CSExxxxx"
+    var course_code
   
-    var sheet = SpreadsheetApp.openById(sheet_id).getSheetByName(course_code);
+    var worksheet = SpreadsheetApp.openById(sheet_id)
+      var course_code = SpreadsheetApp.openById(sheet_id).getSheetName()
+      var sheet = worksheet.getSheetByName(course_code);
+      Logger.log(course_code)
     var data = sheet.getDataRange().getValues();
   
     var skills = []
