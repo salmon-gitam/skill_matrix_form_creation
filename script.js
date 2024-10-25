@@ -1,32 +1,37 @@
 function myFunction() {
     var sheet_id = '1VZZedsz_vya4C3fEOBxQ_3S1ga6WLiSuvempq5Ow7EU'
-    var course_code
+    
   
     var worksheet = SpreadsheetApp.openById(sheet_id)
-      var course_code = SpreadsheetApp.openById(sheet_id).getSheetName()
-      var sheet = worksheet.getSheetByName(course_code);
-      Logger.log(course_code)
+      var sheet_name = SpreadsheetApp.openById(sheet_id).getSheetName()
+      var sheet = worksheet.getSheets()[0];
+      Logger.log(sheet)
     var data = sheet.getDataRange().getValues();
   
     var skills = []
     var skill_types = []
+    var course_name = data[1][1]
+    var course_code = data[1][0]
   
     for(var i = 1; i < data.length; i++){
       skills.push(data[i][3])
       skill_types.push(data[i][2])
     }
     skills = removeEmptyValues(skills,skill_types)
+     Logger.log(data[1][0])
+    Logger.log(data[1][1])
     Logger.log(skills)
   
-    createForm(course_code, skills)
+    createForm(sheet_name, skills, course_name, course_code)
   
   }
   
   
-  function createForm(course_code, skills){
+  function createForm(sheet_name, skills, course_name, course_code){
     // Creating form
-    var form = FormApp.create(course_code);
-    form.setTitle(course_code);
+    var form = FormApp.create(sheet_name);
+    form.setTitle(sheet_name);
+    form.setDescription(course_code + " - " + course_name)
     var formId = form.getId();
     
     form.addTextItem().setTitle('Employee Id').setRequired(true);
